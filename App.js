@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { Alert, Button, StyleSheet } from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
-import { CATEGORIES } from "./data/dummy-data";
+import MealDetailsScreen from "./screens/MealDetailsScreen";
+// import { CATEGORIES } from "./data/dummy-data";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +45,8 @@ export default function App() {
             component={MealsOverviewScreen}
             /* 
             This is one option for setting the option object properties
-            dynamically.
+            dynamically. The other option happens directly on the
+            "MealsOverview" component.
 
             // When using a function for the "options" prop, the
             // function receives an object with to key-value pairs.
@@ -62,6 +64,7 @@ export default function App() {
             }}
             */
           />
+          <Stack.Screen name="MealDetails" component={MealDetailsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
