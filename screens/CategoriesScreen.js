@@ -8,13 +8,17 @@ import CategoryGridTile from "../components/CategoryGridTile";
 export default function CategoriesScreen({ navigation }) {
   // const { navigate } = useNavigation();
 
-  const renderCategoryItem = (itemData) => {
+  // Abstracted the "item" property from the "itemData" object that is
+  // passed to the function on the FlatList "renderItem" property.
+  const renderCategoryItem = ({ item }) => {
     const pressHandler = () => {
       // "MealsOverview" is the arbitrary name given to the
       // Stack.Screen.
       // The second argument, which is an object, is
-      // optional but allows passing data when navigating.
-      navigation.navigate("MealsOverview", { categoryId: itemData.item.id });
+      // optional but allows passing data when navigating (data is
+      // accessible through the "route.params" prop that is passed to
+      // the component that is being navigated to).
+      navigation.navigate("MealsOverview", { categoryId: item.id });
 
       // The useNavigation hook can be used as an alternative to the
       // navigation prop that is passed to component functions that are
@@ -24,8 +28,8 @@ export default function CategoriesScreen({ navigation }) {
 
     return (
       <CategoryGridTile
-        title={itemData.item.title}
-        color={itemData.item.color}
+        title={item.title}
+        color={item.color}
         onPress={pressHandler}
       />
     );
