@@ -1,13 +1,57 @@
 import { StatusBar } from "expo-status-bar";
-import { Alert, Button, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import FavoritesScreen from "./screens/FavoritesScreen";
 // import { CATEGORIES } from "./data/dummy-data";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        headerTintColor: "white",
+        sceneContainerStyle: {
+          backgroundColor: "#3f2f25",
+        },
+        drawerContentStyle: {
+          backgroundColor: "#351401",
+        },
+        drawerInactiveTintColor: "white",
+        drawerActiveTintColor: "#351401",
+        drawerActiveBackgroundColor: "#e4baa1",
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: "All Categories",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons color={color} size={size} name="list" />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons color={color} size={size} name="star" />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+};
 
 export default function App() {
   return (
@@ -24,20 +68,20 @@ export default function App() {
             },
           }}
         >
-          {/* The first Stack.Screen rendered will be the default starting
+          {/* The first Screen rendered will be the default starting
            screen for the app unless the "initialRouteName" property on 
            the Stack.Navigator is given a value. */}
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
+            name="Drawer"
+            // This is a drawer navigation component nested in the stack
+            // component.
+            component={DrawerNavigator}
             // Adds styling to the specific screen.
             options={{
-              title: "All Categories",
-              headerStyle: { backgroundColor: "#351401" },
-              headerTintColor: "white",
-              contentStyle: {
-                backgroundColor: "#3f2f25",
-              },
+              // Hides the header on the stack screen since the screens
+              // in the drawer navigator also have headers and we want
+              // the drawer menu icon to be visible.
+              headerShown: false,
             }}
           />
           <Stack.Screen
@@ -64,7 +108,13 @@ export default function App() {
             }}
             */
           />
-          <Stack.Screen name="MealDetails" component={MealDetailsScreen} />
+          <Stack.Screen
+            name="MealDetails"
+            component={MealDetailsScreen}
+            options={{
+              title: "Meal Details",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
