@@ -9,6 +9,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import FavoritesScreen from "./screens/FavoritesScreen";
 // import { CATEGORIES } from "./data/dummy-data";
 import { Ionicons } from "@expo/vector-icons";
+import FavoritesContextProvider from "./store/context/favorites-context";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -57,37 +58,38 @@ export default function App() {
   return (
     <>
       <StatusBar style="dark" />
-      <NavigationContainer>
-        <Stack.Navigator
-          // Adds styling to every screen.
-          screenOptions={{
-            headerStyle: { backgroundColor: "#351401" },
-            headerTintColor: "white",
-            contentStyle: {
-              backgroundColor: "#3f2f25",
-            },
-          }}
-        >
-          {/* The first Screen rendered will be the default starting
+      <FavoritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            // Adds styling to every screen.
+            screenOptions={{
+              headerStyle: { backgroundColor: "#351401" },
+              headerTintColor: "white",
+              contentStyle: {
+                backgroundColor: "#3f2f25",
+              },
+            }}
+          >
+            {/* The first Screen rendered will be the default starting
            screen for the app unless the "initialRouteName" property on 
            the Stack.Navigator is given a value. */}
-          <Stack.Screen
-            name="Drawer"
-            // This is a drawer navigation component nested in the stack
-            // component.
-            component={DrawerNavigator}
-            // Adds styling to the specific screen.
-            options={{
-              // Hides the header on the stack screen since the screens
-              // in the drawer navigator also have headers and we want
-              // the drawer menu icon to be visible.
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverviewScreen}
-            /* 
+            <Stack.Screen
+              name="Drawer"
+              // This is a drawer navigation component nested in the stack
+              // component.
+              component={DrawerNavigator}
+              // Adds styling to the specific screen.
+              options={{
+                // Hides the header on the stack screen since the screens
+                // in the drawer navigator also have headers and we want
+                // the drawer menu icon to be visible.
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
+              /* 
             This is one option for setting the option object properties
             dynamically. The other option happens directly on the
             "MealsOverview" component.
@@ -107,16 +109,17 @@ export default function App() {
               };
             }}
             */
-          />
-          <Stack.Screen
-            name="MealDetails"
-            component={MealDetailsScreen}
-            options={{
-              title: "Meal Details",
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+            />
+            <Stack.Screen
+              name="MealDetails"
+              component={MealDetailsScreen}
+              options={{
+                title: "Meal Details",
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 }
